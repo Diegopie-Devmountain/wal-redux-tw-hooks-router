@@ -12,7 +12,7 @@ export default function Router() {
       element: <App />,
       children: [
         {
-          path: '/all',
+          index: true,
           element: <AllTasks />
         },
         {

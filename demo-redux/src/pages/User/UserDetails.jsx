@@ -25,7 +25,7 @@ export default function UserDetails(
   }
 
   return (
-    <div>
+    <div className="mt-4">
       <h2 className="text-center font-bold">User Details</h2>
 
       {
@@ -35,7 +35,7 @@ export default function UserDetails(
           :
           <label>
             Name
-            <input value={nameData} onChange={(e) => setName(e.target.value)} type="text" />
+            <input className="ml-3 text-black" value={nameData} onChange={(e) => setName(e.target.value)} type="text" />
           </label>
       }
       {
@@ -45,11 +45,11 @@ export default function UserDetails(
           :
           <div className="flex">
             <label htmlFor="role">Role</label>
-            <input id="role" type="text"  {...roleData} />
+            <input className="ml-3 text-black" id="role" type="text"  {...roleData} />
           </div>
       }
       <p><span className="font-semibold">Salary: </span>{Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary)}</p>
-      <div className="flex justify-center gap-x-6">
+      <div className="flex justify-center gap-x-6 mt-4">
         {!isEditing && <button className="btn-primary" onClick={() => setIsEditing(true)}>Edit</button>}
         {isEditing && <button className="btn-primary" onClick={handleSave}>Save</button>}
       </div>

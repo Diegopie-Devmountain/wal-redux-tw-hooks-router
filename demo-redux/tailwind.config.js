@@ -15,8 +15,12 @@ export default {
     extend: {
       colors: {
         "brand-orange": {
-          100: '#fff',
+          100: '#f7bf23',
           300: '#d19d0d'
+        },
+        "brand-purple": {
+          100: '#ab77f7',
+          500: '#2d0569' 
         }
       }
     },

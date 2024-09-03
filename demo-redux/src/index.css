@@ -6,21 +6,31 @@
 @tailwind utilities;
 
 * {
-  border: 1px dotted blue;
+  /* border: 1px dotted blue; */
 }
 
-a .active {
+a.active {
   font-weight: 700;
 }
 
 @layer base {
   html {
-    @apply font-poppins
+    @apply font-poppins bg-black text-white
+  }
+
+  input {
+    font: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
   }
 }
 
 @layer components {
   .btn-primary {
     @apply bg-brand-orange-300 text-center text-white text-sm px-6 py-1 uppercase tracking-wider
+  }
+
+  .title-primary {
+    @apply text-center text-4xl font-matemasie mt-10
   }
 }

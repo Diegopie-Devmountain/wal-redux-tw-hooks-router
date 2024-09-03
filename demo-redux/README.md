@@ -4,24 +4,25 @@
 
 - [Redux](#redux)
   - [Table of Contents](#table-of-contents)
-  - [Show Off Demo Code](#show-off-demo-code)
   - [Install Tailwind](#install-tailwind)
+  - [Set Up User Page](#set-up-user-page)
     - [Create a default font for site](#create-a-default-font-for-site)
-  - [Setup Router](#setup-router)
-  - [Demo Prop Drilling](#demo-prop-drilling)
-  - [Custom Hooks](#custom-hooks)
-  - [Add Redux](#add-redux)
-  - [Error Handling](#error-handling)
-  - [Loading](#loading)
+    - [Setup Router](#setup-router)
+    - [Demo Prop Drilling](#demo-prop-drilling)
+    - [Custom Hooks](#custom-hooks)
+    - [Add Redux](#add-redux)
+    - [Error Handling](#error-handling)
+    - [Loading](#loading)
+  - [Set up task pages](#set-up-task-pages)
+    - [Fix Task Form](#fix-task-form)
   
-
-## Show Off Demo Code
-
 ## Install Tailwind
 
 Go through the docs to install the base setup
 
 [Tailwind Docs](https://tailwindcss.com/docs/guides/vite)
+
+## Set Up User Page
 
 ### Create a default font for site
 
@@ -58,7 +59,7 @@ Then update index.css to apply styles to app
 }
 ```
 
-## Setup Router
+### Setup Router
 
 Install package
 `npm i react-router-dom`
@@ -80,7 +81,7 @@ export default function Router() {
       element: <App />,
       children: [
         {
-          path: '/all',
+          index: true,
           element: <AllTasks />
         },
         {
@@ -103,9 +104,9 @@ export default function Router() {
 }
 ```
 
-## Demo Prop Drilling
+### Demo Prop Drilling
 
-With routes working, go to account page and walk through the prop drilling down to UserDetails.jsx
+With routes working, go to account page and walk through the prop drilling down to UserDetails.jsx. Write out the tailwind as you go. Create a component for the h1
 
 ```js
 import { useState } from "react";
@@ -225,7 +226,7 @@ const [nameData, setName] = useState('');
 
 But this sucks, so lets create a custom hook to do this for us
 
-## Custom Hooks
+### Custom Hooks
 
 ```js
 // useFormState.jsx
@@ -261,7 +262,7 @@ const handleSave = () => {
 
 So custom hooks are great, but now there is a change to the user data and we have to render there salary here. We could go through the entire thing with prop drilling or take advantage of redux
 
-## Add Redux
+### Add Redux
 
 `npm install @reduxjs/toolkit react-redux`
 
@@ -420,7 +421,7 @@ const userState = {
 
 We still have to manage our error handling
 
-## Error Handling
+### Error Handling
 
 ```js
 case "SET_ERROR":
@@ -439,7 +440,7 @@ case "SET_ERROR":
     });
 ```
 
-## Loading
+### Loading
 
 `npm install react-spinners`
 https://www.davidhu.io/react-spinners/
@@ -509,3 +510,33 @@ We can use the computed section of dev tool to find the height of the container 
   />
 </div>
 ```
+
+## Set up task pages
+
+A lot of the redux code is already made, we're just going to plug them together and see how we can add complexity to what we have already done
+
+### Fix Task Form
+
+The task form has no way of getting info from the form. Let's use refs this time with a custom hook
+
+```js
+const title = useRef(null);
+const description = useRef(null);
+const dueDate = useRef(null);
+console.log(title.current.value);
+
+// hook
+import { useRef } from "react";
+
+export default function useFormData(inputs = {}) {
+  const allRefs = useRef(inputs);
+
+  return []
+
+}
+
+// TaskForm.jsx
+const [] = useFormData({title, description, dueDate})
+```
+
+So now lets create the methods that will do the magic
