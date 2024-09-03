@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  border: 1px dotted blue;
+  font-family: "Proza Libre", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+a .active {
+  font-weight: bolder;
+}
+
 @layer base {
   html {
     @apply font-poppins
