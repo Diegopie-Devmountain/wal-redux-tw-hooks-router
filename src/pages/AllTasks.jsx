@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TaskList from "../features/TaskList/TaskList";
-import { useDispatch } from "react-redux";
-import { getTaskThunk } from "../store/tasks/taskThunks";
 
 
 export default function AllTasks() {
 
   const [filter, setFilter] = useState('all');
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getTaskThunk)
-  }, [])
-
   return (
     <main>
       AllTasks page

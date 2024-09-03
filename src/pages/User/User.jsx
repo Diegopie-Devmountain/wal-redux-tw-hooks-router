@@ -1,6 +1,4 @@
-import { Provider } from 'react-redux';
 import UserBody from "./UserBody.jsx";
-import userStore from './userReducer.js'
 
 export default function User() {
 
@@ -12,11 +10,9 @@ export default function User() {
   };
 
   return (
-    <main className="flex justify-center flex-col">
-      <h1 className="title-primary">Account</h1>
-      <Provider store={userStore} >
+    <main>
+      <h1>Account</h1>
         <UserBody name={user.name} role={user.role} level={user.level} />
-      </Provider>
     </main>
   )
 }

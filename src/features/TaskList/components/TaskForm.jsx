@@ -1,25 +1,10 @@
-import { useRef } from 'react';
-import useFormData from '../hooks/userFormRef';
-import { useDispatch } from 'react-redux';
-import { addTask } from '../../../store/tasks/taskActions';
 
 export default function TaskForm() {
-  const title = useRef(null);
-  const description = useRef(null);
-  const dueDate = useRef(null);
-  console.log(title.current?.value);
 
-  const [allFormData, resetFormData] = useFormData({title, description, dueDate})
-
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(allFormData());
     
-    const {title, description, dueDate} = allFormData();
-    dispatch(addTask({ id: Date.now(), title, description, dueDate, completed: false }));
-    resetFormData()
   };
 
   return (
@@ -35,7 +20,6 @@ export default function TaskForm() {
             className='block w-full text-black h-10'
             type="text"
             placeholder="Task Title"
-            ref={title}
             required
           />
         </label>
@@ -44,7 +28,6 @@ export default function TaskForm() {
           <textarea
             className='block w-full text-black h-24'
             placeholder="Task Description"
-            ref={description}
             required
           />
         </label>
@@ -53,7 +36,6 @@ export default function TaskForm() {
           <input
           className='block w-full text-black h-10'
             type="date"
-            ref={dueDate}
             required
           />
         </label>
