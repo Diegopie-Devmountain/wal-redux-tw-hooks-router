@@ -11,7 +11,14 @@ export default {
     fontFamily: {
       "poppins": ['"Poppins"', ...defaultTheme.fontFamily.sans],
     },
-    extend: {},
+    extend: {
+      colors: {
+        "brand-orange": {
+          100: '#fff',
+          300: '#d19d0d'
+        }
+      }
+    },
   },
   plugins: [],
 }
