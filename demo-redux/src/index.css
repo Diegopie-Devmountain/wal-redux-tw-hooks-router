@@ -9,3 +9,7 @@
     @apply font-poppins
   }
 }
+
+a.active{
+  font-weight: 700;
+}
