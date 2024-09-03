@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import UserBody from "./UserBody";
+import UserBody from "./UserBody.jsx";
 import userStore from './userReducer.js'
 
 export default function User() {

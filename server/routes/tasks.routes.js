@@ -5,7 +5,7 @@ import taskData from '../database/tasks.json' assert { type: 'json' }
 const taskRouter = Router();
 
 taskRouter.get('/data', (req, res) => {
-  console.log(taskData);
+  // console.log(taskData);
   setTimeout(() => {
     res.status(200).json({success: true, data: taskData})
   }, 3000)
