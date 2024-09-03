@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Halloween (1978)",
+    "description": "A classic slasher film where Michael Myers terrorizes a small town on Halloween night.",
+    "dueDate": "2024-09-10",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "title": "Hocus Pocus",
+    "description": "Three witches are resurrected in Salem, Massachusetts, and wreak havoc on Halloween night.",
+    "dueDate": "2024-09-17",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "title": "The Exorcist",
+    "description": "A chilling story about the demonic possession of a young girl and the exorcism performed to save her.",
+    "dueDate": "2024-09-24",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "title": "A Nightmare on Elm Street",
+    "description": "Freddy Krueger haunts the dreams of teenagers in this terrifying slasher film.",
+    "dueDate": "2024-10-01",
+    "completed": false
+  },
+  {
+    "id": 5,
+    "title": "Beetlejuice",
+    "description": "A dark comedy about a recently deceased couple who hire a mischievous ghost to scare away the new owners of their house.",
+    "dueDate": "2024-10-08",
+    "completed": false
+  },
+  {
+    "id": 6,
+    "title": "The Shining",
+    "description": "A family heads to an isolated hotel for the winter where an evil presence drives the father to madness.",
+    "dueDate": "2024-10-15",
+    "completed": false
+  },
+  {
+    "id": 7,
+    "title": "Scream",
+    "description": "A group of teenagers is targeted by a masked killer who follows the rules of horror movies.",
+    "dueDate": "2024-10-20",
+    "completed": false
+  },
+  {
+    "id": 8,
+    "title": "The Addams Family",
+    "description": "A quirky, spooky family navigates life in a world that doesn't understand them.",
+    "dueDate": "2024-10-22",
+    "completed": false
+  },
+  {
+    "id": 9,
+    "title": "Coraline",
+    "description": "A young girl discovers a parallel world that seems better than her own, but dark secrets lurk beneath the surface.",
+    "dueDate": "2024-10-28",
+    "completed": false
+  },
+  {
+    "id": 10,
+    "title": "The Witch",
+    "description": "A family in 1630s New England is torn apart by the forces of witchcraft, black magic, and possession.",
+    "dueDate": "2024-10-31",
+    "completed": false
+  }
+]

@@ -15,7 +15,7 @@ a.active {
 
 @layer base {
   html {
-    @apply font-poppins bg-black text-white
+    @apply font-poppins bg-gray-900 text-white
   }
 
   input {

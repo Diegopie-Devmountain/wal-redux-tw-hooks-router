@@ -15,6 +15,10 @@
     - [Loading](#loading)
   - [Set up task pages](#set-up-task-pages)
     - [Fix Task Form](#fix-task-form)
+    - [Setting global state](#setting-global-state)
+    - [Create Provider](#create-provider)
+    - [Render from state](#render-from-state)
+    - [Render from DB](#render-from-db)
   
 ## Install Tailwind
 
@@ -540,3 +544,209 @@ const [] = useFormData({title, description, dueDate})
 ```
 
 So now lets create the methods that will do the magic
+
+```js
+import { useRef } from "react";
+
+export default function useFormData(refs = {}) {
+  const allRefs = useRef(refs);
+
+  const getData = () => {
+    const response = {};
+    for (let [key, value] of Object.entries(allRefs.current)) {
+      response[key] = value.current.value;
+    }
+
+    return response;
+  }
+
+  const resetData = () => {
+    Object.values(allRefs.current).forEach(ref => {
+      ref.current.value = ''
+    })
+  }
+
+  return [getData, resetData]
+}
+
+// TaskForm.jsx
+const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(allFormData());
+    resetFormData()
+    // dispatch(addTask({ id: Date.now(), title, description, dueDate, completed: false }));
+  };
+``` 
+
+Now we have a working for. Let's connect all our redux files
+
+### Setting global state
+
+First let's look at the `store`. Notice that reducer is now an object than can now accept many reducers. So would could add an entirely separate reducer to handle something like auth and still have it share the global scope
+
+```js
+import { configureStore } from '@reduxjs/toolkit'
+import tasksReducer from './tasks/taskReducer'
+
+export default configureStore({
+  reducer: {
+    taskState: tasksReducer
+  }
+})
+```
+
+Now Let's look at the reducer. We'll start with some hard coded initialState then update that to use DB data. Notice that we import our actions types from a separate file. 
+They are still used in a switch case to determine what changes to state need to occur, but is now more complex because 🤷‍♂️. Let's look at that file.
+
+`taskActions.js` also holds dispatch objects. These are now functions that accept an object to be used for the payload, and return objects that are used for a dispatch.
+Again, more complex because 🤷‍♂️
+
+The last bit of complexity is `taskSelectors.js`. Again, something that would normally just be placed in our component but these you might reuse as well.
+Notice that when we access state, we must specify that we want to access the tasksState
+
+```js
+export const selectTasks = (state) => state.tasksState.tasks;
+
+export const selectFilteredTasks = (state, filter) => {
+  switch (filter)  {
+    case 'completed': 
+      return state.tasksState.tasks.filter(task => task.completed);
+    case 'pending':
+      return state.tasksState.tasks.filter(task => !task.completed);
+    default:
+      return state.tasksState.tasks;
+  }
+};
+```
+
+We also have `taskThunks.js`
+
+Now lets plug it all in
+
+### Create Provider
+
+```js
+// Main.jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import Router from './Router'
+import { Provider } from 'react-redux';
+import globalStore from './store/store.js';
+import './index.css'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Provider store={globalStore} >
+      <Router />
+    </Provider>
+  </StrictMode>,
+)
+```
+
+### Render from state
+
+We'll set up TaskList to render the state array
+
+```js
+// TaskList.jsx
+import React from 'react';
+import TaskItem from './components/TaskItem';
+import { useSelector } from 'react-redux';
+import { selectFilteredTasks } from '../../store/tasks/taskSelectors';
+
+export default function TaskList ({ filter })  {
+  // const tasks = [];
+  const tasks = useSelector((state) => selectFilteredTasks(state, filter));
+```
+
+Now we can dispatch actions on `TaskItem.jsx`
+
+```js
+import { useDispatch } from 'react-redux';
+import { deleteTask, toggleComplete } from '../../../store/tasks/taskActions';
+
+export default function TaskItem({ task }) {
+  const dispatch = useDispatch();
+
+  return (
+    <li className='mt-6 bg-brand-purple-100 text-white py-4 px-8 rounded-md'>
+      <div className='flex justify-between h-10'>
+        <h3 className='font-matemasie text-lg'>{task.title}</h3>
+        <p className='font-semibold'>Due: {task.dueDate}</p>
+      </div>
+      <p className='min-h-16'>{task.description}</p>
+      <div className='flex justify-around'>
+        <button
+          className='btn-primary'
+          onClick={() => dispatch(toggleComplete(task.id))}
+        >
+          {task.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+        </button>
+        <button
+          className='btn-primary'
+          onClick={() => dispatch(deleteTask(task.id))}
+        >Delete</button>
+      </div>
+    </li>
+  );
+};
+```
+
+And now we just have to connect to the create page
+
+```js
+import { useRef } from 'react';
+import useFormData from '../hooks/userFormRef';
+import { useDispatch } from 'react-redux';
+import { addTask } from '../../../store/tasks/taskActions';
+
+export default function TaskForm() {
+  const title = useRef(null);
+  const description = useRef(null);
+  const dueDate = useRef(null);
+  console.log(title.current?.value);
+
+  const [allFormData, resetFormData] = useFormData({title, description, dueDate})
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(allFormData());
+    
+    const {title, description, dueDate} = allFormData();
+    dispatch(addTask({ id: Date.now(), title, description, dueDate, completed: false }));
+    resetFormData()
+  };
+
+  return (
+    <section className='w-4/5 m-auto mt-8 md:w-1/2 bg-brand-purple-100 py-4 px-8 rounded-md text-white'>
+      <h1 className='title-primary'>Create a Task</h1>
+      <form 
+        onSubmit={handleSubmit}
+        className='flex flex-col gap-y-5 mt-6'
+      >
+```
+
+### Render from DB
+
+```js
+import { useDispatch } from "react-redux";
+import { getTaskThunk } from "../store/tasks/taskThunks";
+
+
+export default function AllTasks() {
+
+  const [filter, setFilter] = useState('all');
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getTaskThunk)
+  }, [])
+  ```
+
+
+// add success state when creating tasks
+// add loading state when loading tasks
+// add ref to track who to highlight in filter
+// update your backend to persist task data
