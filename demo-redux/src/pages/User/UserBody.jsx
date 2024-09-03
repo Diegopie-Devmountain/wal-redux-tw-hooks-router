@@ -1,8 +1,10 @@
-export default function UserBody({ name, role }) {
+import UserInfo from './UserInfo'
+
+export default function UserBody({ name, role, level }) {
   return (
-    <div>
-      <h1>Main Content</h1>
-      <UserInfo name={name} role={role} />
-    </div>
+    <section className='w-4/5 m-auto mt-8 md:w-1/2'>
+      <h2 className='text-center font-bold'>Edit Account Details</h2>
+      <UserInfo name={name} role={role} level={level}/>
+    </section>
   );
 }

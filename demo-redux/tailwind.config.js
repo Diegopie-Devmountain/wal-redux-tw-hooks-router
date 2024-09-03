@@ -10,6 +10,7 @@ export default {
   theme: {
     fontFamily: {
       "poppins": ['"Poppins"', ...defaultTheme.fontFamily.sans],
+      "matemasie": ['"Matemasie"', ...defaultTheme.fontFamily.serif],
     },
     extend: {
       colors: {

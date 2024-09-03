@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTask from "./pages/CreateTask";
 import AllTasks from "./pages/AllTasks";
-import User from "./pages/User";
+import User from "./pages/User/User";
 import App from "./App";
 import NotFound from "./pages/NotFound";
 
