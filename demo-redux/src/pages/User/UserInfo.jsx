@@ -1,6 +1,16 @@
 import UserDetails from "./UserDetails"
+import { useSelector } from "react-redux"
 
-export default function UserInfo({ name, role, level }) {
+
+export default function UserInfo(
+  { 
+    name, 
+    role, 
+    // level 
+  }
+) {
+
+  const level = useSelector(state => state.level);
 
   return (
     <div>

@@ -5,10 +5,14 @@ import writeToJson from "../controller/writeToJson.js";
 const userRouter = Router();
 
 userRouter.get('/data', (req, res) => {
-  res.status(200).json({success: true, data: userData})
+  console.log(userData);
+  setTimeout(() => {
+    res.status(200).json({success: true, data: userData})
+  }, 3000)
 })
 
 userRouter.post('/save', ({body}, res) => {
+  console.log(body);
   const newUserData = Object.assign(userData, {...body})
   console.log(newUserData);
   

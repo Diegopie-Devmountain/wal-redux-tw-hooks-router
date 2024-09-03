@@ -9,7 +9,7 @@ export default function writeToJson (db, data) {
       return null;
     }
 
-    console.log("Successfully wrote to `${db}.json`!");
+    console.log(`Successfully wrote to ${db}.json!`);
     return true;
   });
 }
