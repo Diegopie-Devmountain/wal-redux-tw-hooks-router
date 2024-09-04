@@ -8,9 +8,11 @@
   - [Set Up User Page](#set-up-user-page)
     - [Create a default font for site](#create-a-default-font-for-site)
     - [Setup Router](#setup-router)
+      - [Create Navbar](#create-navbar)
     - [Demo Prop Drilling](#demo-prop-drilling)
     - [Custom Hooks](#custom-hooks)
     - [Add Redux](#add-redux)
+      - [Connect to Server](#connect-to-server)
     - [Error Handling](#error-handling)
     - [Loading](#loading)
   - [Set up task pages](#set-up-task-pages)
@@ -105,6 +107,27 @@ export default function Router() {
   ]);
 
   return <RouterProvider router={router} />
+}
+```
+
+#### Create Navbar
+
+```js
+import { NavLink } from "react-router-dom"
+export default function TopNav() {
+
+  return (
+    <nav className='bg-brand-orange-300 h-14 flex'>
+      <NavLink to="/">
+        {/* <img className='h-full' src='/logo.jpeg' /> */}
+      </NavLink>
+      <div className='flex flex-row justify-evenly items-center w-5/6 text-center px-8 h-full'>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/create">Create Task</NavLink>
+        <NavLink to="/user">User Account</NavLink>
+      </div>
+    </nav>
+  )
 }
 ```
 
@@ -352,22 +375,11 @@ export default function UserDetails(
     <p><span className="font-semibold">Salary: </span>{ Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(salary)}</p>
 ```
 
-React will yell at us about memoizing this selector, so we can do that real quick
+React will yell at us about memoizing this selector, I'm going to ignore it
 
 With that done, we can update our reducer to update our state and talk to the server
 
-```js
-// create a new case in reducer
-case 'UPDATE':
-  const {nameData, roleData} = action.payload
-  axios.post('/api/user/save', action.payload);
-  return {...state, nameData, roleData};
-
-// useDispatch
-import { useSelector, useDispatch } from "react-redux";
-const dispatch = useDispatch();
-dispatch({type: 'UPDATE', payload: {nameData, roleData: roleData.value} });
-```
+#### Connect to Server
 
 But we still need to get the user data from the db, we can use a thunk for this
 
@@ -391,11 +403,6 @@ export const getUserThunk = async (dispatch) => {
 switch (action.type) {
     case "SET_DATA":
       return {...action.payload, loading: false };
-    case "UPDATE":
-      const { nameData: name, roleData: role } = action.payload;
-      console.log({ name, role });
-      axios.post("/api/user/save", { name, role });
-      return { ...state, name, role };
     case "SET_LOADING":
       return { ...state, loading: true };
     default:
@@ -421,6 +428,21 @@ const userState = {
   salary: 0,
   loading: true,
 };
+```
+
+Now we can update our db when editing
+
+```js
+// create a new case in reducer
+case 'UPDATE':
+  const {nameData, roleData} = action.payload
+  axios.post('/api/user/save', action.payload);
+  return {...state, nameData, roleData};
+
+// useDispatch
+import { useSelector, useDispatch } from "react-redux";
+const dispatch = useDispatch();
+dispatch({type: 'UPDATE', payload: {nameData, roleData: roleData.value} });
 ```
 
 We still have to manage our error handling

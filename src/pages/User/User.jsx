@@ -13,6 +13,7 @@ export default function User() {
 
   return (
     <main className="flex justify-center flex-col">
+      {/* <h1 className="text-center text-4xl font-matemasie mt-10">Account</h1> */}
       <h1 className="title-primary">Account</h1>
       <Provider store={userStore} >
         <UserBody name={user.name} role={user.role} level={user.level} />
