@@ -1,5 +1,7 @@
 # Redux
 
+rev-01 is original starter code with UserDetails jsx not built out. This is now completed in rev-02 to focus on just redux and hooks
+
 ## Table of Contents
 
 - [Redux](#redux)
