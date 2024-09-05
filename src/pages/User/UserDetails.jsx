@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFormState from "../../hooks/useFormState";
 import { useSelector, useDispatch } from "react-redux";
+import useMoneyFormatter from "../../features/TaskList/hooks/useMoneyFormatter";
 
 export default function UserDetails(
   {
@@ -48,7 +49,8 @@ export default function UserDetails(
             <input className="ml-3 text-black" id="role" type="text"  {...roleData} />
           </div>
       }
-      <p><span className="font-semibold">Salary: </span>{Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary)}</p>
+      {/* <p><span className="font-semibold">Salary: </span>{Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary)}</p> */}
+      <p><span className="font-semibold">Salary: </span>{useMoneyFormatter(salary)}</p>
       <div className="flex justify-center gap-x-6 mt-4">
         {!isEditing && <button className="btn-primary" onClick={() => setIsEditing(true)}>Edit</button>}
         {isEditing && <button className="btn-primary" onClick={handleSave}>Save</button>}

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import UserInfo from './UserInfo'
 import { useEffect } from 'react';
 import { getUserThunk } from "./userReducer";
-import PacmanLoader from "react-spinners/ClipLoader";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 export default function UserBody({ name, role, level }) {
 
