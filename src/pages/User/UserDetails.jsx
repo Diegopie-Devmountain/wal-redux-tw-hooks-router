@@ -9,6 +9,9 @@ export default function UserDetails(
 
   const [isEditing, setIsEditing] = useState(false);
 
+  const salary = 52000;
+
+
   const handleSave = () => {
 
   }
@@ -37,6 +40,7 @@ export default function UserDetails(
             <input className="ml-3 text-black" id="role" type="text"  />
           </div>
       }
+      <p><span className="font-semibold">Salary: </span>{Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary)}</p>
       <UserDetailsButtons isEditing={isEditing} setIsEditing={setIsEditing} handleSave={handleSave} />
     </div>
   );
