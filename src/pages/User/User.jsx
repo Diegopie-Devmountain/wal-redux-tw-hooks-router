@@ -10,8 +10,8 @@ export default function User() {
   };
 
   return (
-    <main>
-      <h1>Account</h1>
+    <main className="flex justify-center flex-col">
+      <h1 className="title-primary">Account</h1>
         <UserBody name={user.name} role={user.role} level={user.level} />
     </main>
   )

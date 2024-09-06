@@ -12,7 +12,7 @@ export default function UserInfo(
 
   return (
     <div>
-      <p><span>Ghost Buster Level:</span> {level}</p>
+      <p><span className="font-semibold">Ghost Buster Level:</span> {level}</p>
       <UserDetails name={name} role={role} />
     </div>
   )
